@@ -1,0 +1,73 @@
+services:
+
+  vector_db:
+    image: cr.dtsx.io/datastax/dse-server:7.0.0-alpha.4
+    container_name: dse7
+    environment:
+      DS_LICENSE: accept
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "DESCRIBE KEYSPACES"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+    volumes:
+    # Update this to match your local paths
+      - /home/your_username/code/pytldr-oss/dse/7.0.0-alpha.4:/var/lib/cassandra
+    networks:
+      backend:
+        ipv4_address: 10.1.0.2
+
+  search_db:
+    image: cr.dtsx.io/datastax/dse-server:6.8.37
+    container_name: dse68
+    command: ["-s"]
+    environment:
+      DS_LICENSE: accept
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "DESCRIBE KEYSPACES"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+    volumes:
+    # Update this to match your local paths
+      - /home/your_username/code/pytldr-oss/dse/6.8.37:/var/lib/cassandra
+    networks:
+      backend:
+        ipv4_address: 10.1.0.3
+
+  server:
+    image: pytldr
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      GRADIO_SERVER_NAME: "0.0.0.0"
+    working_dir: /pytldr
+    command: ["gradio", "app.py", "--demo-name=demo"]
+    volumes:
+    # Update this to match your local paths
+      - /home/your_username/code/pytldr-oss:/pytldr
+      - /home/your_username/code/llama.cpp/models:/usr/share/models
+      - /home/your_username/.cache/huggingface:/root/.cache/huggingface
+    ports:
+      - 7860:7860
+    networks:
+      backend:
+        ipv4_address: 10.1.0.4
+    depends_on:
+      vector_db:
+        condition: service_healthy
+      search_db:
+        condition: service_healthy
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.1.0.0/16
+          gateway: 10.1.0.1

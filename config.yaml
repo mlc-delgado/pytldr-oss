@@ -1,0 +1,13 @@
+agentContexts:
+answersLimit: 4
+keywordsLimit: 6
+llmPath: /usr/share/models/
+maxPromptLength: 9000
+maxResultsPerSearch: 4
+maxSearchResults: 15
+maxTokens: 4096
+scoreThreshold: 0.16
+solrHost: 10.1.0.3
+solrPort: 9042
+vectorHost: 10.1.0.2
+vectorPort: 9042
