@@ -5,6 +5,8 @@ Welcome to PyTLDR, a Python project that pushes the boundaries of chatbot assist
 
 If you have ever wanted to deploy a private version of ChatGPT that can index and read your ebooks and text data, then this is the app for you. Best of all, it runs locally on your hardware, and runs on a wide range of graphics processing units (GPUs), no third party subscriptions or APIs necessary.
 
+[![RAG in action](https://img.youtube.com/vi/91DwV_hzzqE/hqdefault.jpg)](https://youtu.be/91DwV_hzzqE)
+
 ## Purpose
 Many professionals are interested in integrating Large Language Models (LLMs) into their tooling and daily workflow, but are concerned about privacy and cost. Additionally, LLMs are prone to hallucniation, and it is extremely costly to train and fine tune your own models for your particular use case. This application alleviates those concerns by allowing users to run inference locally on hardware they own, and integrates with Cassandra databases to provide Retrieval Augmented Generation (RAG), allowing users to augment foundation models such as Llama 2 with domain-specific knowledge, without investing in training or fine tuning.
 
