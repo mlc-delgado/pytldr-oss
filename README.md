@@ -222,6 +222,8 @@ Making changes in the `RAG Settings` menu will change them for the current sessi
 
 # FAQ
 
+* **I have tabular data in my PDF files, is that supported?**
+    * Tabular data is not supported, currently the contents of the files are converted to text before loading to the databases. The LLM can sometimes interpret data from the converted tables, but is not guaranteed to work.
 * **The system prompts appear to be really inconsistent in the source code. Why are they configured in this way?**
     * The formats of the system prompts were chosen through rigorous testing. I observed multiple instances where relocating and rephrasing the prompt engineering instructions in various ways throughout the body of the prompt tends to result in wildly different outputs, with no apparent rhyme or reason. Conventional wisdom and existing guides for prompt engineering were eschewed in favor of what works specifically for the version of Llama 2 13B that I used. I cannot guarantee that other models will perform the same.
 * **Can I use this to summarize an entire book?**
